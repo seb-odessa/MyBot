@@ -1,3 +1,6 @@
+#![allow(non_snake_case)]
+#![allow(warnings)]
+
 #[macro_use] extern crate text_io;
 
 mod hlt;
@@ -8,7 +11,7 @@ use std::collections::HashMap;
 
 fn main() {
     let (id, map) = networking::get_init();
-    let mut bot = SmartBot::new(id, map, "Smart v3 Bot");
+    let mut bot = SmartBot::new(id, map, "Smart v7 Bot");
     networking::send_init(bot.get_init());
 
     loop {
@@ -84,10 +87,16 @@ impl SmartBot {
                 if site.owner != target.owner {
                     (delta, *d)
                 } else {
-                    if site.strength > 16 && target.strength > 8 {
-                        (delta, *d)
-                    } else if site.strength > 64 {
-                        (0, self.find_nearest(l))
+                    if site.strength > 8 && site.strength < 16 && target.strength > 24 && target.strength < 200{
+                        (0, *d)
+                    } else if site.strength > 16 {
+                        let mv = self.find_nearest(l);
+                        let target = self.site(l, mv);
+                        if target.owner == site.owner && site.strength + target.strength < 255 {
+                            (1, mv)
+                        } else {
+                            (0, STILL)
+                        }
                     } else {
                         (0, STILL)
                     }

@@ -1,10 +1,9 @@
 [package]
 name = "Rust"
-version = "0.5.0"
+version = "0.7.0"
 authors = ["Pavel Kolevatyh <pavel.kolevatyh@gmail.com>"]
 
 [dependencies]
-rand = "*"
 text_io = "*"
 
 [[bin]]
